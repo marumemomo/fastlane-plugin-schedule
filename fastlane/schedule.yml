@@ -1,0 +1,22 @@
+everyday:
+  12:
+    lane: deploy
+1: # Monday
+  9:
+    lane: test
+  14:
+    lane: alert_release
+  15:
+    lane:
+2: # Tuesday
+3: # Wednesday
+  15:
+    lane: release
+4: # Thursday
+  15:
+    lane: test
+5: # Friday
+  9:
+    lane: check
+  16:
+    lane: submit
