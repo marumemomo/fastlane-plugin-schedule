@@ -7,6 +7,10 @@ module Fastlane
   module Actions
     class GetLaneAction < Action
       def self.run(params)
+        default_timezone = ENV['TZ']
+        if !params[:timezone].nil?
+          ENV['TZ'] = params[:timezone]
+        end
         schedule = YAML.load_file('./fastlane/schedule.yml')
         time = Time.now
         wday = time.wday
@@ -19,6 +23,7 @@ module Fastlane
         if action.nil?
           return everyday_action
         end
+        ENV['TZ'] = default_timezone
         action['lane']
       end
 
@@ -56,11 +61,11 @@ module Fastlane
 
       def self.available_options
         [
-          # FastlaneCore::ConfigItem.new(key: :your_option,
-          #                         env_name: "SCHEDULE_YOUR_OPTION",
-          #                      description: "A description of your option",
-          #                         optional: false,
-          #                             type: String)
+          FastlaneCore::ConfigItem.new(key: :timezone,
+                                  env_name: "TZ",
+                               description: "timezone",
+                                  optional: true,
+                                      type: String)
         ]
       end
 
